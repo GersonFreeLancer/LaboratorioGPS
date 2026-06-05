@@ -65,6 +65,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     // lab 3 libraries
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
     implementation("androidx.activity:activity-compose:1.10.0")
     implementation("androidx.compose.ui:ui-text-google-fonts:1.7.8")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
