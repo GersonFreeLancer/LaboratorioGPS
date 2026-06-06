@@ -1,19 +1,32 @@
 package com.example.demodata
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.demodata.ui.screens.GpsScreen
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.demodata.ui.navigation.Navigation
+import com.example.demodata.ui.theme.DemoDataTheme
+import com.example.demodata.ui.viewmodel.SessionViewModel
 
 class MainActivity : ComponentActivity() {
-
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            GpsScreen()
+            val app = applicationContext as DemoDataApp
+            val sessionVm: SessionViewModel = viewModel(
+                factory = SessionViewModel.Factory(app.sessionManager)
+            )
+
+            val isDarkModePref by sessionVm.isDarkMode.collectAsState()
+            val darkTheme      = isDarkModePref ?: isSystemInDarkTheme()
+
+            DemoDataTheme(darkTheme = darkTheme) {
+                Navigation()
+            }
         }
     }
 }
